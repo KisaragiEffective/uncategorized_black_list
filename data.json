@@ -1,0 +1,230 @@
+{
+  "metadata": {
+    "schema": {
+      "definition": null,
+      "version": "1",
+    }
+    "license": {
+      "copyright_holder": [
+        {
+          "display_name": "KisaragiEffective",
+          "github": "https://github.com/KisaragiEffective"
+        }
+      ],
+      "proprietary": true
+    }
+  },
+  "reason": [
+    {
+      "slug": "anti_antiad",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "広告ブロッカーの強制排除"
+        }
+      ]
+    },
+    {
+      "slug": "open_redir",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "オープンリダイレクト"
+        }
+      ]
+    },
+    {
+      "slug": "spam",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "スパム"
+        }
+      ]
+    },
+    {
+      "slug": "outdated_trans",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "原文の更新が長らく反映されていない翻訳"
+        }
+      ]
+    },
+    {
+      "slug": "intranet_mirror",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "イントラネット用のミラー"
+        }
+      ]
+    },
+    {
+      "slug": "low_rep",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "評価値が低いサイト"
+        }
+      ]
+    },
+    {
+      "slug": "casino",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "カジノ"
+        }
+      ]
+    },
+    {
+      "slug": "media_paywall",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "有料会員など、コンテンツに金を支払う必要性があるメディア"
+        }
+      ]
+    },
+    {
+      "slug": "library_mirror",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "ライブラリのミラー"
+        }
+      ]
+    },
+    {
+      "slug": "typo_squat",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "打ち間違いを利用して本来求めていたものとは別のコンテンツを送信する"
+        }
+      ]
+    },
+    {
+      "slug": "sparse",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "ウェブページの最終的な高さに対して内容が薄いページ"
+        }
+      ]
+    },
+    {
+      "slug": "scam:nitro",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "Discord Nitroが無料でもらえると謳った詐欺"
+        }
+      ]
+    },
+    {
+      "slug": "scam:steam",
+      "lang": [
+        {
+          "iso639_3": "jpn",
+          "text": "Steam関連の詐欺"
+        }
+      ]
+    }
+  ],
+  "sites": [
+    {
+      "type": "domain",
+      "match": "literal",
+      "domain": "gigazine.net",
+      "reason": "low_rep"
+    },
+    {
+      "type": "domain",
+      "match": "literal",
+      "domain": "gjthub.com",
+      "reason": "typo_squat",
+    },
+    {
+      "type": "domain",
+      "match": "literal",
+      "domain": "www.sejuku.net",
+      "reason": [
+        "low_rep",
+        "sparse"
+      ]
+    },
+    {
+      "type": "domain",
+      "match": "literal",
+      "domain": "ck.getcookiestxt.com",
+      "reason": [
+        "low_rep",
+        "sparse",
+        "tracking"
+      ]
+    },
+    {
+      "type": "path",
+      "match": "literal",
+      "path": "bit.ly/freefollowersnew",
+      "reason": "low_rep"
+    },
+    {
+      "type": "domain",
+      "match": "literal",
+      "domain": "ganohr.net",
+      "reason": "anti_antiad"
+    },
+    {
+      "type": "path",
+      "match": "wildcard",
+      "path": ""
+      "gpg": true,
+      "reason": "sparse"
+    },
+    {
+      "type": "condition",
+      "match": "boolean",
+      "condition": {
+        "and": [
+          {
+            "part": "host",
+            "any": true
+          },
+          {
+            "part": "path",
+            "include": {
+              "any": [
+                "logout",
+                "login",
+                "redirect"
+              ]
+            }
+          },
+          {
+            "part": "query",
+            "superset_of": [
+              {
+                "key": "redirect",
+                "value": {
+                  "pre": [
+                    {
+                      "perform": "parse_url",
+                      "error": "quit"
+                    },
+                    {
+                      "perform": "pick_hostname",
+                    }
+                  ]
+                  "match_predicate": "free_gtld",
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
